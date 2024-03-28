@@ -3,5 +3,5 @@ export type PhotosType = {
   name: string;
   description: string;
   userLogin: string;
-  publishDate: Date;
+  publishDate: string;
 };

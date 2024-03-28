@@ -23,19 +23,15 @@ const HomePage = () => {
         gap: "2rem",
       }}
     >
-      {data?.map(({ name, id, description, publishDate, userLogin }) => {
-        const date = new Date(publishDate);
-
-        return (
-          <div key={id}>
-            <span>{name}</span>
-            <img src={"kebab.png"} alt={name} />
-            <span>{description}</span>
-            <span>{userLogin}</span>
-            <span>{date.toString()}</span>
-          </div>
-        );
-      })}
+      {data?.map(({ name, id, description, publishDate, userLogin }) => (
+        <div key={id}>
+          <p>{name}</p>
+          <img src={"kebab.png"} alt={name} />
+          <p>{description}</p>
+          <p>{userLogin}</p>
+          <p>{publishDate}</p>
+        </div>
+      ))}
     </div>
   );
 };
