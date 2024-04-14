@@ -1,3 +1,3 @@
 export const PATH_NAMES = {
-  homePage: "/",
+  homePage: "/", loginPage:"login"
 };
