@@ -1,3 +1,5 @@
 export const PATH_NAMES = {
-  homePage: "/", loginPage:"login"
+  homePage: "/",
+  //loginPage: "login",
+  signUpPage: "sign-up",
 };

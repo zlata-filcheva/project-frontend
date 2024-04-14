@@ -1,34 +1,37 @@
 import { usePageTitle } from "../../utils/usePageTitle/usePageTitle.ts";
-import { usePhotoQuery } from "../../api/photo/queryHooks.ts";
+import "./styles.css";
+import { Link } from "react-router-dom";
+import { PATH_NAMES } from "../../modules/router/routes.ts";
 
 const LoginPage = () => {
-  usePageTitle("Home Page");
+  usePageTitle("Login page");
 
-  const { data, isLoading } = usePhotoQuery();
+  //const { data, isLoading } = usePhotoQuery();
 
-  if (isLoading) {
-    return <div style={{ padding: "1rem" }}>Login pqge</div>;
-  }
+  const handleLoginClick = () => {
+    //handleLogin
+  };
 
   return (
-    <div
-      style={{
-        padding: "1rem",
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: "2rem",
-      }}
-    >
-      {data?.map(({ name, id, description, publishDate, userLogin }) => (
-        <div key={id}>
-          <p>{name}</p>
-          <img src={"kebab.png"} alt={name} />
-          <p>{description}</p>
-          <p>{userLogin}</p>
-          <p>{publishDate}</p>
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="input-container">
+        <label htmlFor="username">Username:</label>
+        <input type="text" id="username" name="username" />
+      </div>
+
+      <div className="input-container">
+        <label htmlFor="password">Password:</label>
+        <input type="password" id="password" name="password" />
+      </div>
+
+      <div className="input-container">
+        <button type={"button"} onClick={handleLoginClick}>
+          Login
+        </button>
+
+        <Link to={PATH_NAMES.signUpPage}>Sign Up</Link>
+      </div>
+    </>
   );
 };
 
