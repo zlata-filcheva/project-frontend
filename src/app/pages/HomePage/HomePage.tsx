@@ -4,15 +4,7 @@ import { usePhotoQuery } from "../../api/photo/queryHooks.ts";
 const HomePage = () => {
   usePageTitle("Home Page");
 
-  const { data, isLoading } = usePhotoQuery();
-
-  if (isLoading) {
-    return (
-      <div style={{ padding: "1rem" }}>
-        Await page loading. Page will be updated soon
-      </div>
-    );
-  }
+  //const { data, isLoading } = usePhotoQuery();
 
   return (
     <div
@@ -23,15 +15,7 @@ const HomePage = () => {
         gap: "2rem",
       }}
     >
-      {data?.map(({ name, id, description, publishDate, userLogin }) => (
-        <div key={id}>
-          <p>{name}</p>
-          <img src={"kebab.png"} alt={name} />
-          <p>{description}</p>
-          <p>{userLogin}</p>
-          <p>{publishDate}</p>
-        </div>
-      ))}
+      This Is Home Page
     </div>
   );
 };

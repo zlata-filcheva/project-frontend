@@ -2,6 +2,7 @@ import { usePageTitle } from "../../utils/usePageTitle/usePageTitle.ts";
 import "./styles.css";
 import { Link } from "react-router-dom";
 import { PATH_NAMES } from "../../modules/router/routes.ts";
+import React from "react";
 
 const LoginPage = () => {
   usePageTitle("Login page");
@@ -29,7 +30,7 @@ const LoginPage = () => {
           Login
         </button>
 
-        <Link to={PATH_NAMES.signUpPage}>Sign Up</Link>
+        <Link to={`../${PATH_NAMES.signUpPage}`}>Sign up</Link>
       </div>
     </>
   );
