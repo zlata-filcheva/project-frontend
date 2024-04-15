@@ -1,8 +1,12 @@
 import { useQuery } from "react-query";
-import { downloadPhoto } from "./api.ts";
+import { getUser } from "../user/api";
 
-export const usePhotoQuery = () => {
-  const { data, isLoading } = useQuery(["photo-list"], downloadPhoto);
+export const useUserQuery = (email: string, password: string) => {
+  const { data, isLoading } = useQuery(
+    ["user"],
+    () => getUser(email, password),
+    { enabled: !!email.length && !!password.length },
+  );
 
   return { data, isLoading };
 };
