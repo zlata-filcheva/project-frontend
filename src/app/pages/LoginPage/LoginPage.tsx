@@ -1,21 +1,38 @@
 import { usePageTitle } from "../../utils/usePageTitle/usePageTitle.ts";
 import "./styles.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { PATH_NAMES } from "../../modules/router/routes.ts";
 import React, { useState } from "react";
-import { useUserQuery } from "../../api/photo/queryHooks";
+import { useUserQuery } from "../../api/user/queryHooks";
+import { isEmpty } from "lodash";
 
 const LoginPage = () => {
   usePageTitle("Login page");
 
-  const [email, setEmail] = useState("");
-  const [password, setPasword] = useState("");
+  const navigate = useNavigate();
 
-  const { data, isLoading } = useUserQuery(email, password);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLogging, setIsLogging] = useState(false);
+
+  const { data: userData, isLoading } = useUserQuery({
+    email,
+    password,
+    isLogging,
+    setIsLogging,
+  });
 
   const handleLoginClick = () => {
-    console.log(data);
+    setIsLogging(true);
   };
+
+  if (isLoading && isLogging) {
+    return "Logging is in process";
+  }
+
+  if (!isLoading && !isEmpty(userData)) {
+    return <Navigate to={PATH_NAMES.homePage} state={{ userData }} />;
+  }
 
   return (
     <>
@@ -25,6 +42,7 @@ const LoginPage = () => {
           type="text"
           id="username"
           name="username"
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
@@ -35,7 +53,8 @@ const LoginPage = () => {
           type="password"
           id="password"
           name="password"
-          onChange={(e) => setPasword(e.target.value)}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
       </div>
 
