@@ -52,7 +52,7 @@ const SignUpPage = () => {
           Sign up
         </button>
 
-        <Link to={PATH_NAMES.homePage}>Login</Link>
+        <Link to={`../${PATH_NAMES.loginPage}`}>Login</Link>
       </div>
     </>
   );
