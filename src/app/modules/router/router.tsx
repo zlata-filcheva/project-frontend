@@ -2,14 +2,14 @@ import { createBrowserRouter } from "react-router-dom";
 import { PATH_NAMES } from "./routes.ts";
 import LoginPage from "../../pages/LoginPage/LoginPage";
 import SignUpPage from "../../pages/SignUpPage/SignUpPage.tsx";
-import HomePage from "../../pages/HomePage/HomePage";
+import Profile from "../../components/Login/Profile.tsx";
 
 export const router = createBrowserRouter([
   {
     path: PATH_NAMES.homePage,
     children: [
       {
-        element: <HomePage />,
+        element: <Profile />,
         index: true,
       },
       {
