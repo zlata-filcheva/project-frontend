@@ -1,18 +1,18 @@
 import { usePageTitle } from "../../utils/usePageTitle/usePageTitle.ts";
-import { usePhotoQuery } from "../../api/photo/queryHooks.ts";
-import { Navigate, useLocation } from "react-router-dom";
-import { isEmpty } from "lodash";
-import { PATH_NAMES } from "../../modules/router/routes";
+import { useAuth0 } from "@auth0/auth0-react";
+import LogoutButton from "../../components/Login/LogoutButton.tsx";
 
 const HomePage = () => {
   usePageTitle("Home Page");
 
-  const { state } = useLocation();
+  const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
 
-  //const { data, isLoading } = usePhotoQuery();
+  if (isLoading) {
+    return <div>Loading ...</div>;
+  }
 
-  if (isEmpty(state?.userData)) {
-    return <Navigate to={PATH_NAMES.loginPage} />;
+  if (!isAuthenticated) {
+    loginWithRedirect().then();
   }
 
   return (
@@ -24,7 +24,11 @@ const HomePage = () => {
         gap: "2rem",
       }}
     >
-      This Is Home Page
+      <div>This Is Home Page</div>
+
+      <div style={{ textAlign: "right" }}>
+        <LogoutButton />
+      </div>
     </div>
   );
 };
