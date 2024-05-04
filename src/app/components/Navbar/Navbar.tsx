@@ -5,7 +5,11 @@ import { Link } from "react-router-dom";
 import { PATH_NAMES } from "../../modules/router/routes.ts";
 
 const Navbar = () => {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">

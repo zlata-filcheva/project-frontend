@@ -1,4 +1,4 @@
-import { PhotosType } from "../../types/photos.ts";
+import { PhotosType } from "../../types/category.ts";
 
 export const getUser = async (
   email: string,
