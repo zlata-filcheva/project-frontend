@@ -3,8 +3,8 @@ import PageTitle from "../PageTitle/PageTitle.tsx";
 
 const PageTemplate = ({ children }: { children: ReactElement }) => {
   return (
-    <div style={{ padding: "1rem" }}>
-      <PageTitle title={document.title} />
+    <div className={"px-3 lg:px-24"}>
+      <PageTitle />
 
       {children}
     </div>
