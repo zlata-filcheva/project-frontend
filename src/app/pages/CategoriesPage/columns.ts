@@ -10,4 +10,8 @@ export const columns: ColumnDef<CategoryType>[] = [
     accessorKey: "name",
     header: "Name",
   },
+  {
+    accessorKey: "description",
+    header: "Description",
+  },
 ];

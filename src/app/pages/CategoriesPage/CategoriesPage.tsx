@@ -1,5 +1,8 @@
 import { usePageTitle } from "../../utils/usePageTitle/usePageTitle.ts";
-import { useCategoriesList } from "../../api/category/queryHooks.ts";
+import {
+  useCategoriesList,
+  useCategoryCreate,
+} from "../../api/category/queryHooks.ts";
 import DataTable from "@/app/pages/CategoriesPage/DataTable.tsx";
 import { columns } from "@/app/pages/CategoriesPage/columns.ts";
 import Drawer from "@/app/components/Drawer/Drawer.tsx";
@@ -17,9 +20,24 @@ const CategoriesPage = () => {
   usePageTitle("Categories page");
 
   const { data, isLoading } = useCategoriesList();
+  const { mutateCategoryCreate } = useCategoryCreate();
 
-  const [newCategoryTitle, setNewCategoryTitle] = useState("");
-  const [newCategoryDescription, setNewCategoryDescription] = useState("");
+  const [newCategoryTitle, setNewCategoryTitle] = useState("Texan");
+  const [newCategoryDescription, setNewCategoryDescription] = useState(
+    "Something related to Texas",
+  );
+
+  const handleCategoryCreate = () => {
+    const newData = {
+      category: newCategoryTitle,
+      description: newCategoryDescription,
+    };
+
+    mutateCategoryCreate({
+      data: newData,
+      onSettled: (data) => console.log(data),
+    });
+  };
 
   if (isLoading) {
     return null;
@@ -40,6 +58,7 @@ const CategoriesPage = () => {
         textareaText={newCategoryDescription}
         setTextareaText={setNewCategoryDescription}
         textareaPlaceholder={CATEGORIES_DRAWER_TEXTAREA_PLACEHOLDER}
+        onSubmit={handleCategoryCreate}
       />
     </>
   );

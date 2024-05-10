@@ -24,6 +24,7 @@ const Drawer = ({
   textareaText,
   setTextareaText,
   textareaPlaceholder,
+  onSubmit,
 }: {
   triggerIcon: ReactElement;
   triggerText: string;
@@ -35,6 +36,7 @@ const Drawer = ({
   textareaText: string;
   setTextareaText: Dispatch<SetStateAction<string>>;
   textareaPlaceholder: string;
+  onSubmit: () => void;
 }) => (
   <UiDrawer>
     <DrawerTrigger asChild>
@@ -50,14 +52,16 @@ const Drawer = ({
           <DrawerDescription>{description}</DrawerDescription>
         </DrawerHeader>
 
-        <div className="p-4 pb-0">
-          <div className="flex items-center justify-center space-x-2">
+        <div className="p-4 pb-0 grid space-y-2">
+          <div>
             <Input
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder={inputPlaceholder}
             />
+          </div>
 
+          <div>
             <Textarea
               value={textareaText}
               onChange={(e) => setTextareaText(e.target.value)}
@@ -67,7 +71,7 @@ const Drawer = ({
         </div>
 
         <DrawerFooter>
-          <Button>Submit</Button>
+          <Button onClick={onSubmit}>Submit</Button>
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>
