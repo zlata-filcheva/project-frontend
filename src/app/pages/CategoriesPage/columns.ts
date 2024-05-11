@@ -7,11 +7,7 @@ export const CategoriesTableColumns: ColumnDef<CategoryType>[] = [
     header: "Name",
   },
   {
-    accessorKey: "surname",
-    header: "Surname",
-  },
-  {
-    accessorKey: "nickName",
-    header: "Nickname",
+    accessorKey: "description",
+    header: "Description",
   },
 ];

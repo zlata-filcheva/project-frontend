@@ -1,11 +1,11 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { createUserData, getUserData } from "./api.ts";
 import { USER_DATA_QUERY_KEY } from "@/app/api/user/queryKeys.ts";
 
-export const useUserData = () => {
+export const useUserData = (id: string) => {
   const { data, isLoading } = useQuery(
     [USER_DATA_QUERY_KEY],
-    () => getUserData(),
+    () => getUserData(id),
     {
       onSettled: () => {},
     },
@@ -15,14 +15,15 @@ export const useUserData = () => {
 };
 
 export const useUserDataCreate = () => {
+  const queryClient = useQueryClient();
+
   const { mutate } = useMutation(
-    `${USER_DATA_QUERY_KEY}`,
     ({
       data,
     }: {
       data: {
         id: string;
-        nickName: string;
+        nickname: string;
         name: string;
         surname: string;
       };
@@ -30,6 +31,8 @@ export const useUserDataCreate = () => {
     }) => createUserData(data),
     {
       onSettled: async (_data, _error, { onSettled }) => {
+        await queryClient.invalidateQueries([USER_DATA_QUERY_KEY]);
+
         onSettled();
       },
     },

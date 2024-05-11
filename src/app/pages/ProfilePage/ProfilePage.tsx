@@ -19,17 +19,17 @@ const ProfilePage = () => {
 
   const { user } = useAuth0();
 
-  const { data, isLoading } = useUserData();
+  const { data, isLoading } = useUserData(user?.sub ?? "");
   const { mutateUserDataCreate } = useUserDataCreate();
 
-  const [name, setName] = useState("John");
-  const [surname, setSurname] = useState("Adams");
-  const [nickName, setNickName] = useState("john-adams");
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [nickname, setNickname] = useState("");
 
   const handleUserDataCreate = () => {
     const newData = {
       id: user?.sub ?? "",
-      nickName,
+      nickname,
       name,
       surname,
     };
@@ -65,7 +65,7 @@ const ProfilePage = () => {
           <p className="leading-7">Nickname</p>
         </div>
         <div>
-          <p className="leading-7 font-semibold">{data?.nickName ?? ""}</p>
+          <p className="leading-7 font-semibold">{data?.nickname ?? ""}</p>
         </div>
       </div>
 
@@ -89,8 +89,8 @@ const ProfilePage = () => {
             />
 
             <Input
-              value={nickName}
-              onChange={(e) => setNickName(e.target.value)}
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
               placeholder={PROFILE_DRAWER_NICKNAME_PLACEHOLDER}
             />
           </>
