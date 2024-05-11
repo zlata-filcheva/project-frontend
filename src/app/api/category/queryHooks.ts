@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { createCategory, getCategoriesList } from "./api.ts";
 import { CATEGORIES_LIST_QUERY_KEY } from "@/app/api/category/queryKeys.ts";
 
@@ -15,8 +15,9 @@ export const useCategoriesList = () => {
 };
 
 export const useCategoryCreate = () => {
+  const queryClient = useQueryClient();
+
   const { mutate } = useMutation(
-    `${CATEGORIES_LIST_QUERY_KEY}`,
     ({
       data,
     }: {
@@ -25,6 +26,8 @@ export const useCategoryCreate = () => {
     }) => createCategory(data),
     {
       onSettled: async (_data, _error, { onSettled }) => {
+        await queryClient.invalidateQueries([CATEGORIES_LIST_QUERY_KEY]);
+
         onSettled();
       },
     },

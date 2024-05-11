@@ -7,35 +7,23 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
+} from "@/components/ui/drawer.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { Dispatch, ReactElement, SetStateAction } from "react";
-import { Input } from "@/components/ui/input.tsx";
-import { Textarea } from "@/components/ui/textarea.tsx";
+import { ReactElement } from "react";
 
 const Drawer = ({
   triggerIcon,
   triggerText,
   title,
   description,
-  inputText,
-  setInputText,
-  inputPlaceholder,
-  textareaText,
-  setTextareaText,
-  textareaPlaceholder,
+  drawerContent,
   onSubmit,
 }: {
   triggerIcon: ReactElement;
   triggerText: string;
   title: string;
   description: string;
-  inputText: string;
-  setInputText: Dispatch<SetStateAction<string>>;
-  inputPlaceholder: string;
-  textareaText: string;
-  setTextareaText: Dispatch<SetStateAction<string>>;
-  textareaPlaceholder: string;
+  drawerContent: ReactElement;
   onSubmit: () => void;
 }) => (
   <UiDrawer>
@@ -52,23 +40,7 @@ const Drawer = ({
           <DrawerDescription>{description}</DrawerDescription>
         </DrawerHeader>
 
-        <div className="p-4 pb-0 grid space-y-2">
-          <div>
-            <Input
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              placeholder={inputPlaceholder}
-            />
-          </div>
-
-          <div>
-            <Textarea
-              value={textareaText}
-              onChange={(e) => setTextareaText(e.target.value)}
-              placeholder={textareaPlaceholder}
-            />
-          </div>
-        </div>
+        <div className="p-4 pb-0 grid space-y-2">{drawerContent}</div>
 
         <DrawerFooter>
           <Button onClick={onSubmit}>Submit</Button>

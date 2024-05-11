@@ -1,11 +1,7 @@
 import { CategoryType } from "@/app/types/category.ts";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const columns: ColumnDef<CategoryType>[] = [
-  {
-    accessorKey: "id",
-    header: "Id",
-  },
+export const CategoriesTableColumns: ColumnDef<CategoryType>[] = [
   {
     accessorKey: "name",
     header: "Name",

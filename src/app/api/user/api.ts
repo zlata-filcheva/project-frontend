@@ -1,15 +1,20 @@
-import { PhotosType } from "../../types/category.ts";
+import { instance } from "@/app/api/instance/instance.ts";
+import { UserType } from "@/app/types/user.ts";
 
-export const getUser = async (
-  email: string,
-  password: string,
-): Promise<PhotosType[]> => {
-  const url = new URL("https://127.0.0.1/project-backend/index.php/user/check");
+export const getUserData = async (id: string) => {
+  const { data } = await instance.get<UserType>(`users/${id}`);
 
-  url.searchParams.append("email", email);
-  url.searchParams.append("password", password);
-
-  const response = await fetch(url);
-
-  return await response.json();
+  return data;
 };
+
+export const createUserData = ({
+  id,
+  nickname,
+  name,
+  surname,
+}: {
+  id: string;
+  nickname: string;
+  name: string;
+  surname: string;
+}) => instance.post<UserType>(`users`, { id, nickname, name, surname });
