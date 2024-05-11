@@ -124,6 +124,7 @@ paths:
                     type: string
                   nickname:
                     type: string
+  /users:
     post:
       description: Allows to add missing information about user
       requestBody:
