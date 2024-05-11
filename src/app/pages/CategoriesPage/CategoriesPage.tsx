@@ -23,9 +23,8 @@ const CategoriesPage = () => {
   const { mutateCategoryCreate } = useCategoryCreate();
 
   const [newCategoryTitle, setNewCategoryTitle] = useState("Texan");
-  const [newCategoryDescription, setNewCategoryDescription] = useState(
-    "Something related to Texas",
-  );
+  const [newCategoryDescription, setNewCategoryDescription] =
+    useState("I like Texan food");
 
   const handleCategoryCreate = () => {
     const newData = {
@@ -35,7 +34,10 @@ const CategoriesPage = () => {
 
     mutateCategoryCreate({
       data: newData,
-      onSettled: (data) => console.log(data),
+      onSettled: () => {
+        setNewCategoryTitle("");
+        setNewCategoryDescription("");
+      },
     });
   };
 
@@ -45,7 +47,7 @@ const CategoriesPage = () => {
 
   return (
     <>
-      <DataTable columns={columns} data={data!} />
+      <DataTable columns={columns} data={data ?? []} />
 
       <Drawer
         triggerIcon={<CirclePlus className="mr-2 h-4 w-4" />}

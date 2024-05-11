@@ -1,24 +1,16 @@
 import { CategoryType } from "../../types/category.ts";
-import { BE_URL } from "../constants.ts";
-import { fetchInstance } from "@/app/modules/fetchInstance/fetchInstance.ts";
+import { instance } from "@/app/api/instance/instance.ts";
 
-export const getCategoriesList = async (): Promise<CategoryType[]> => {
-  const url = new URL(`${BE_URL}/categories`);
+export const getCategoriesList = async () => {
+  const { data } = await instance.get<CategoryType[]>(`categories`);
 
-  const response = await fetch(url);
-
-  return await response.json();
+  return data;
 };
 
-export const createCategory = async ({
+export const createCategory = ({
   category,
   description,
 }: {
   category: string;
   description: string;
-}) => {
-  await fetchInstance.post(`${BE_URL}/categories`, {
-    category,
-    description,
-  });
-};
+}) => instance.post<CategoryType>(`categories`, { category, description });
