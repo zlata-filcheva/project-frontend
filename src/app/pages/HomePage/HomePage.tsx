@@ -1,4 +1,4 @@
-import { usePageTitle } from "../../utils/usePageTitle/usePageTitle.ts";
+import { usePageTitle } from "../../utils/usePageTitle.ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "../../components/Login/LogoutButton.tsx";
 

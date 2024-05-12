@@ -1,4 +1,4 @@
-import { usePageTitle } from "../../utils/usePageTitle/usePageTitle.ts";
+import { usePageTitle } from "../../utils/usePageTitle.ts";
 import {
   useCategoriesList,
   useCategoryCreate,

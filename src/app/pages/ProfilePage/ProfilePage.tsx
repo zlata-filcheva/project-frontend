@@ -1,4 +1,4 @@
-import { usePageTitle } from "../../utils/usePageTitle/usePageTitle.ts";
+import { usePageTitle } from "../../utils/usePageTitle.ts";
 import { CirclePlus } from "lucide-react";
 import { useState } from "react";
 import { useUserData, useUserDataCreate } from "@/app/api/user/queryHooks.ts";
