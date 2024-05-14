@@ -1,23 +1,29 @@
 import { instance } from "@/app/api/instance/instance.ts";
-import { UserType } from "@/app/types/user.ts";
+import { PostType } from "@/app/types/post.ts";
 
 export const getPostsList = async () => {
-  const { data } = await instance.get<UserType>(`posts`);
+  const { data } = await instance.get<PostType>(`posts`);
 
   return data;
 };
 
-/*
-export const createUserData = ({
-  id,
-  nickname,
-  name,
-  surname,
+export const createPost = ({
+  title,
+  content,
+  categoryId,
+  userId,
+  tagIds,
 }: {
-  id: string;
-  nickname: string;
-  name: string;
-  surname: string;
-}) => instance.post<UserType>(`users`, { id, nickname, name, surname });
-
- */
+  title: string;
+  content: string;
+  categoryId: number;
+  userId: string;
+  tagIds: number[];
+}) =>
+  instance.post<PostType>(`posts`, {
+    title,
+    content,
+    categoryId,
+    userId,
+    tagIds,
+  });

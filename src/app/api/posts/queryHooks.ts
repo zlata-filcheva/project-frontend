@@ -1,5 +1,5 @@
-import { useQuery } from "react-query";
-import { getPostsList } from "./api.ts";
+import { useMutation, useQuery } from "react-query";
+import { createPost, getPostsList } from "./api.ts";
 import { POSTS_LIST_QUERY_KEY } from "@/app/api/posts/queryKeys.ts";
 
 export const usePostsList = () => {
@@ -14,32 +14,26 @@ export const usePostsList = () => {
   return { data, isLoading };
 };
 
-/*
-export const useUserDataCreate = () => {
-  const queryClient = useQueryClient();
-
+export const usePostCreate = () => {
   const { mutate } = useMutation(
     ({
       data,
     }: {
       data: {
-        id: string;
-        nickname: string;
-        name: string;
-        surname: string;
+        title: string;
+        content: string;
+        categoryId: number;
+        userId: string;
+        tagIds: number[];
       };
       onSettled: () => void;
-    }) => createUserData(data),
+    }) => createPost(data),
     {
       onSettled: async (_data, _error, { onSettled }) => {
-        await queryClient.invalidateQueries([POSTS_LIST_QUERY_KEY]);
-
         onSettled();
       },
     },
   );
 
-  return { mutateUserDataCreate: mutate };
+  return { mutatePostCreate: mutate };
 };
-
- */

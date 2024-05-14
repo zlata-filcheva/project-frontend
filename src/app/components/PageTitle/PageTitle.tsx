@@ -9,7 +9,7 @@ const PageTitle = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight mt-3">
+      <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight mt-3 pb-5">
         {title}
       </h2>
     </div>
