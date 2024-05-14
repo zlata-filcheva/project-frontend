@@ -6,6 +6,6 @@ export type PostType = {
   creatingDate: string;
   updateDate: string;
   categoryId: number;
-  tagIds: number[];
+  tagList: { id: number; name: string }[];
   userId: string;
 };

@@ -1,8 +1,19 @@
 import { instance } from "@/app/api/instance/instance.ts";
 import { PostType } from "@/app/types/post.ts";
 
-export const getPostsList = async () => {
-  const { data } = await instance.get<PostType>(`posts`);
+export const getPostsList = async ({
+  rowCount,
+  offset,
+}: {
+  rowCount: string;
+  offset: string;
+}) => {
+  const { data } = await instance.get<PostType[]>(`posts`, {
+    params: {
+      rowCount,
+      offset,
+    },
+  });
 
   return data;
 };
