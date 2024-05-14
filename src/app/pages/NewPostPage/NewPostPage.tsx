@@ -10,6 +10,7 @@ import NewPostCategorySelect from "@/app/pages/NewPostPage/NewPostCategorySelect
 import { useCategoriesList } from "@/app/api/category/queryHooks.ts";
 import { useTagsList } from "@/app/api/tags/queryHooks.ts";
 import { Button } from "@/components/ui/button.tsx";
+import NewPostTagsDataList from "@/app/pages/NewPostPage/NewPostTagsDataList.tsx";
 
 const NewPostPage = () => {
   usePageTitle("Posts page");
@@ -27,8 +28,18 @@ const NewPostPage = () => {
     setCategoryId(Number(newCategoryId));
   };
 
-  const handleTagIdsChange = (newTagId: string) => {
-    const newTagIdsList = [...tagIds, Number(newTagId)];
+  const handleTagIdsChange = (newTag: string) => {
+    const newTagId = tagsListData?.find(({ name }) => name === newTag)?.id;
+
+    const hasTag = tagIds.some((tagId) => newTagId === tagId);
+
+    const newTagIdsList = hasTag
+      ? tagIds.filter((tagId) => tagId !== newTagId)
+      : [...tagIds, newTagId];
+
+    if (newTagIdsList.length > 5) {
+      return;
+    }
 
     setTagIds(newTagIdsList);
   };
@@ -45,17 +56,27 @@ const NewPostPage = () => {
         placeholder={NEW_POST_TITLE_PLACEHOLDER}
       />
 
-      <NewPostCategorySelect
-        data={categoriesListData ?? []}
-        value={categoryId?.toString()}
-        onValueChange={handleCategoryIdChange}
-      />
+      {categoriesListData?.length && (
+        <NewPostCategorySelect
+          data={categoriesListData}
+          value={categoryId?.toString()}
+          onValueChange={handleCategoryIdChange}
+        />
+      )}
 
       <Textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder={NEW_POST_CONTENT_PLACEHOLDER}
       />
+
+      {tagsListData?.length && (
+        <NewPostTagsDataList
+          data={tagsListData}
+          selectedList={tagIds ?? []}
+          onSelectedListChange={handleTagIdsChange}
+        />
+      )}
 
       <Button>Submit</Button>
     </>
