@@ -124,7 +124,6 @@ paths:
                     type: string
                   nickname:
                     type: string
-  /users:
     post:
       description: Allows to add missing information about user
       requestBody:
@@ -290,6 +289,19 @@ paths:
                     type: array
                     items:
                       type: number
+  /posts/count:
+    get:
+      description: returns an amount of all posts
+      responses:
+        '200':
+          description: Successfully returned an amount of all posts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  amount:
+                    type: number
 
 components:
   schemas:

@@ -3,7 +3,7 @@ export const PATH_NAMES = {
   postsPage: "/posts",
   postPage: "/posts/:id",
   newPostPage: "/new-post",
-  //editPostPage: "/editPost/:id",
+  editPostPage: "/edit-post",
   //deletePostPage: "/deletePost/:id",
   tagsPage: "/tags",
   categoriesPage: "/categories",

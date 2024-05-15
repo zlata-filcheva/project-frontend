@@ -9,3 +9,7 @@ export type PostType = {
   tagList: { id: number; name: string }[];
   userId: string;
 };
+
+export type PostCountType = {
+  count: number;
+};

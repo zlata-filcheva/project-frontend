@@ -1,5 +1,5 @@
 import { instance } from "@/app/api/instance/instance.ts";
-import { PostType } from "@/app/types/post.ts";
+import { PostCountType, PostType } from "@/app/types/post.ts";
 
 export const getPostsList = async ({
   rowCount,
@@ -38,3 +38,9 @@ export const createPost = ({
     userId,
     tagIds,
   });
+
+export const getPostsCount = async () => {
+  const { data } = await instance.get<PostCountType>(`posts/count`);
+
+  return data;
+};

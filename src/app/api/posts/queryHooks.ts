@@ -1,6 +1,9 @@
 import { useMutation, useQuery } from "react-query";
-import { createPost, getPostsList } from "./api.ts";
-import { POSTS_LIST_QUERY_KEY } from "@/app/api/posts/queryKeys.ts";
+import { createPost, getPostsCount, getPostsList } from "./api.ts";
+import {
+  POSTS_COUNT_QUERY_KEY,
+  POSTS_LIST_QUERY_KEY,
+} from "@/app/api/posts/queryKeys.ts";
 
 export const usePostsList = ({
   rowCount,
@@ -42,4 +45,16 @@ export const usePostCreate = () => {
   );
 
   return { mutatePostCreate: mutate };
+};
+
+export const usePostsCount = () => {
+  const { data, isLoading } = useQuery(
+    [POSTS_COUNT_QUERY_KEY],
+    () => getPostsCount(),
+    {
+      onSettled: () => {},
+    },
+  );
+
+  return { data, isLoading };
 };

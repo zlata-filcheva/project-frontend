@@ -11,45 +11,73 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { Pencil } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { PATH_NAMES } from "@/app/modules/router/routes.ts";
+import { useAuth0 } from "@auth0/auth0-react";
+import { PostType } from "@/app/types/post.ts";
 
-const PostCard = ({
-  title,
-  content,
-  tags,
-}: {
-  title: string;
-  content: string;
-  tags: { id: number; name: string }[];
-}) => (
-  <Card>
-    <CardHeader>
-      <CardTitle
-        className={"grid items-center"}
-        style={{ gridTemplateColumns: "45px 1fr" }}
-      >
-        <Avatar>
-          <AvatarImage src={"https://github.com/shadcnfff.png"} />
-          <AvatarFallback>U</AvatarFallback>
-        </Avatar>
+const PostCard = ({ data }: { data: PostType }) => {
+  const navigate = useNavigate();
+  const { user } = useAuth0();
 
-        {title}
-      </CardTitle>
-    </CardHeader>
+  const isAuthor = data?.userId === user?.sub;
 
-    <CardContent>
-      <p>{content}</p>
-    </CardContent>
+  const handleEditButtonClick = () => {
+    navigate(PATH_NAMES.editPostPage, { state: { data } });
+  };
 
-    <CardFooter className={"flex justify-between"}>
-      <p>
-        {tags.map(({ id, name }) => (
-          <Badge key={id}>{name}</Badge>
-        ))}
-      </p>
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle
+          className={"grid items-center"}
+          style={{
+            gridTemplateColumns: isAuthor ? "auto 1fr auto" : "auto 1fr",
+          }}
+        >
+          <div className={"p-1"}>
+            <Avatar>
+              <AvatarImage src={"https://github.com/shadcnfff.png"} />
+              <AvatarFallback>U</AvatarFallback>
+            </Avatar>
+          </div>
 
-      <p>Comments data</p>
-    </CardFooter>
-  </Card>
-);
+          <div>{data.title}</div>
+
+          {isAuthor && (
+            <div>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleEditButtonClick}
+              >
+                <Pencil className="h-4 w-4" />
+              </Button>
+            </div>
+          )}
+        </CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <p>{data.content}</p>
+      </CardContent>
+
+      <CardFooter className={"grid"}>
+        <div className={"flex"}>
+          {data.tagList.map(({ id, name }) => (
+            <div className={"mr-0.5"}>
+              {" "}
+              <Badge key={id}>{name}</Badge>
+            </div>
+          ))}
+        </div>
+
+        <div>Comments data</div>
+      </CardFooter>
+    </Card>
+  );
+};
 
 export default PostCard;
