@@ -1,65 +1,49 @@
 import { usePageTitle } from "../../utils/usePageTitle.ts";
 import PostCard from "@/app/pages/PostsPage/PostCard.tsx";
 import { usePostsCount, usePostsList } from "@/app/api/posts/queryHooks.ts";
-import { useState } from "react";
-import {
-  POST_PAGE_OFFSET,
-  POST_PAGE_ROW_COUNT,
-} from "@/app/pages/PostsPage/constants.ts";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination.tsx";
+import PostsPagePagination from "@/app/pages/PostsPage/PostsPagePagination.tsx";
+import PageItems from "@/app/pages/PostsPage/PageItems.tsx";
+import { isEmpty } from "lodash";
 
 const PostsPage = () => {
   usePageTitle("Posts page");
 
-  const [rowCount, setRowCount] = useState(POST_PAGE_ROW_COUNT);
-  const [offset, setOffset] = useState(POST_PAGE_OFFSET);
-
-  const { data: postsListData, isLoading: isPostsListDataLoading } =
-    usePostsList({
-      rowCount: rowCount.toString(),
-      offset: offset.toString(),
-    });
-  const { data: postCountData, isLoading: isPostsCountLoading } =
+  const {
+    data: postsListData,
+    isLoading: isPostsListLoading,
+    page,
+    setPage,
+  } = usePostsList();
+  const { data: postsCountData, isLoading: isPostsCountLoading } =
     usePostsCount();
 
-  if (isPostsListDataLoading || isPostsCountLoading) {
-    return null;
+  if (isPostsListLoading || isPostsCountLoading) {
+    return;
   }
 
-  if (!postsListData?.length || !postCountData?.count) {
+  if (!postsListData?.length || isEmpty(postsCountData)) {
     return null;
   }
 
   return (
     <>
       {postsListData.map((post) => (
-        <PostCard key={post.id} data={post} />
+        <div className={"mb-4"} key={post.id}>
+          <PostCard data={post} />
+        </div>
       ))}
 
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      <PostsPagePagination
+        pagesTotal={10 ?? postsCountData.pagesTotal}
+        page={page}
+        onPageChange={setPage}
+      >
+        <PageItems
+          pagesTotal={10 ?? postsCountData.pagesTotal}
+          page={page}
+          onPageChange={setPage}
+        />
+      </PostsPagePagination>
     </>
   );
 };

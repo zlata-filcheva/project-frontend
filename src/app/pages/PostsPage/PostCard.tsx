@@ -67,7 +67,7 @@ const PostCard = ({ data }: { data: PostType }) => {
       <CardFooter className={"grid"}>
         <div className={"flex"}>
           {data.tagList.map(({ id, name }) => (
-            <div className={"mr-0.5"}>
+            <div className={"mr-0.5"} key={id}>
               {" "}
               <Badge key={id}>{name}</Badge>
             </div>

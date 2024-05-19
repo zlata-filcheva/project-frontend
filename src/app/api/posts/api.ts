@@ -39,8 +39,10 @@ export const createPost = ({
     tagIds,
   });
 
-export const getPostsCount = async () => {
-  const { data } = await instance.get<PostCountType>(`posts/count`);
+export const getPostsCount = async (rowCount: string) => {
+  const { data } = await instance.get<PostCountType>(`posts/count`, {
+    params: { rowCount },
+  });
 
   return data;
 };

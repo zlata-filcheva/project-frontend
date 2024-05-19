@@ -11,5 +11,5 @@ export type PostType = {
 };
 
 export type PostCountType = {
-  count: number;
+  pagesTotal: number;
 };

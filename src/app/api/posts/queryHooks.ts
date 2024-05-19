@@ -4,23 +4,23 @@ import {
   POSTS_COUNT_QUERY_KEY,
   POSTS_LIST_QUERY_KEY,
 } from "@/app/api/posts/queryKeys.ts";
+import { useState } from "react";
+import { POST_PAGE_ROW_COUNT } from "@/app/pages/PostsPage/constants.ts";
 
-export const usePostsList = ({
-  rowCount,
-  offset,
-}: {
-  rowCount: string;
-  offset: string;
-}) => {
+export const usePostsList = () => {
+  const [page, setPage] = useState(1);
+
+  const offset = (POST_PAGE_ROW_COUNT * (page - 1)).toString();
+
   const { data, isLoading } = useQuery(
     [POSTS_LIST_QUERY_KEY],
-    () => getPostsList({ rowCount, offset }),
+    () => getPostsList({ rowCount: POST_PAGE_ROW_COUNT.toString(), offset }),
     {
       onSettled: () => {},
     },
   );
 
-  return { data, isLoading };
+  return { data, isLoading, page, setPage };
 };
 
 export const usePostCreate = () => {
@@ -50,7 +50,7 @@ export const usePostCreate = () => {
 export const usePostsCount = () => {
   const { data, isLoading } = useQuery(
     [POSTS_COUNT_QUERY_KEY],
-    () => getPostsCount(),
+    () => getPostsCount(POST_PAGE_ROW_COUNT.toString()),
     {
       onSettled: () => {},
     },
