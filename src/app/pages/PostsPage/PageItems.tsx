@@ -1,33 +1,27 @@
-import {
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-} from "@/components/ui/pagination.tsx";
+import { ReactElement } from "react";
+import { isInIntervalInclusive } from "@/app/utils/math.ts";
+import { RenderPageLinkType } from "@/app/types/page.ts";
 
 const PageItems = ({
   pagesTotal,
   page,
   onPageChange,
   itemsBeforeEllipsis = 5,
+  renderPageLink,
+  renderPageEllipsis,
 }: {
   pagesTotal: number;
   page: number;
   onPageChange: (page: number) => void;
   itemsBeforeEllipsis?: number;
+  renderPageLink: ({
+    isActive,
+    onClick,
+    pageNumber,
+  }: RenderPageLinkType) => ReactElement;
+  renderPageEllipsis: ReactElement;
 }) => {
   const hasManyPages = pagesTotal > itemsBeforeEllipsis + 1;
-
-  const isInIntervalInclusive = ({
-    x,
-    a,
-    b,
-  }: {
-    x: number;
-    a: number;
-    b: number;
-  }) => {
-    return a <= x && x <= b;
-  };
 
   return [...Array(pagesTotal).keys()].map((_, index) => {
     const pageNumber = index + 1;
@@ -45,32 +39,18 @@ const PageItems = ({
       b: page + Math.floor(itemsBeforeEllipsis / 2) + 1,
     });
 
-    if (!hasManyPages) {
-      return (
-        <PaginationItem key={index} onClick={() => onPageChange(pageNumber)}>
-          <PaginationLink isActive={isCurrentPageSelected}>
-            {pageNumber}
-          </PaginationLink>
-        </PaginationItem>
-      );
-    }
+    if (!hasManyPages || isFirstPage || isLastPage || hasValueInInterval) {
+      const handlePageChange = () => onPageChange(pageNumber);
 
-    if (isFirstPage || isLastPage || hasValueInInterval) {
-      return (
-        <PaginationItem key={index} onClick={() => onPageChange(pageNumber)}>
-          <PaginationLink isActive={isCurrentPageSelected}>
-            {pageNumber}
-          </PaginationLink>
-        </PaginationItem>
-      );
+      return renderPageLink({
+        onClick: handlePageChange,
+        isActive: isCurrentPageSelected,
+        pageNumber,
+      });
     }
 
     if (hasValueNearInterval) {
-      return (
-        <PaginationItem key={index}>
-          <PaginationEllipsis />
-        </PaginationItem>
-      );
+      return renderPageEllipsis;
     }
 
     return null;

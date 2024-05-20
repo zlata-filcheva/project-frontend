@@ -38,15 +38,19 @@ const PostsPagePagination = ({
     <>
       <Pagination>
         <PaginationContent>
-          <PaginationItem onClick={handlePreviousPage}>
-            <PaginationPrevious />
-          </PaginationItem>
+          {pagesTotal > 1 && (
+            <PaginationItem onClick={handlePreviousPage}>
+              <PaginationPrevious />
+            </PaginationItem>
+          )}
 
           {children}
 
-          <PaginationItem onClick={handleNextPage}>
-            <PaginationNext />
-          </PaginationItem>
+          {pagesTotal > 1 && (
+            <PaginationItem onClick={handleNextPage}>
+              <PaginationNext />
+            </PaginationItem>
+          )}
         </PaginationContent>
       </Pagination>
     </>
