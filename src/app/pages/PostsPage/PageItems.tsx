@@ -13,16 +13,59 @@ const PageItems = ({
   pagesTotal: number;
   page: number;
   onPageChange: (page: number) => void;
-  itemsBeforeEllipsis: number;
+  itemsBeforeEllipsis?: number;
 }) => {
-  const hasManyPages = pagesTotal > itemsBeforeEllipsis;
-  const itemsNumber = hasManyPages ? itemsBeforeEllipsis + 2 : pagesTotal;
+  const hasManyPages = pagesTotal > itemsBeforeEllipsis + 1;
 
-  return Array.from(new Array(itemsNumber)).map((_, index) => {
-    const isPreLastItem = itemsNumber - 1 === index + 1;
-    const isLastItem = itemsNumber === index + 1;
+  const isInIntervalInclusive = ({
+    x,
+    a,
+    b,
+  }: {
+    x: number;
+    a: number;
+    b: number;
+  }) => {
+    return a <= x && x <= b;
+  };
 
-    if (hasManyPages && isPreLastItem) {
+  return [...Array(pagesTotal).keys()].map((_, index) => {
+    const pageNumber = index + 1;
+    const isCurrentPageSelected = page === pageNumber;
+    const isFirstPage = pageNumber === 1;
+    const isLastPage = pageNumber === pagesTotal;
+    const hasValueInInterval = isInIntervalInclusive({
+      x: pageNumber,
+      a: page - Math.floor(itemsBeforeEllipsis / 2),
+      b: page + Math.floor(itemsBeforeEllipsis / 2),
+    });
+    const hasValueNearInterval = isInIntervalInclusive({
+      x: pageNumber,
+      a: page - Math.floor(itemsBeforeEllipsis / 2) - 1,
+      b: page + Math.floor(itemsBeforeEllipsis / 2) + 1,
+    });
+
+    if (!hasManyPages) {
+      return (
+        <PaginationItem key={index} onClick={() => onPageChange(pageNumber)}>
+          <PaginationLink isActive={isCurrentPageSelected}>
+            {pageNumber}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    if (isFirstPage || isLastPage || hasValueInInterval) {
+      return (
+        <PaginationItem key={index} onClick={() => onPageChange(pageNumber)}>
+          <PaginationLink isActive={isCurrentPageSelected}>
+            {pageNumber}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    if (hasValueNearInterval) {
       return (
         <PaginationItem key={index}>
           <PaginationEllipsis />
@@ -30,21 +73,7 @@ const PageItems = ({
       );
     }
 
-    if (hasManyPages && isLastItem) {
-      return (
-        <PaginationItem key={index} onClick={() => onPageChange(index + 1)}>
-          <PaginationLink>{index + 1}</PaginationLink>
-        </PaginationItem>
-      );
-    }
-
-    return (
-      <PaginationItem key={index} onClick={() => onPageChange(index + 1)}>
-        <PaginationLink isActive={page === index + 1}>
-          {index + 1}
-        </PaginationLink>
-      </PaginationItem>
-    );
+    return null;
   });
 };
 
