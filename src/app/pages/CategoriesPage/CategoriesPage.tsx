@@ -1,4 +1,4 @@
-import { usePageTitle } from "../../utils/usePageTitle/usePageTitle.ts";
+import { usePageTitle } from "../../utils/usePageTitle.ts";
 import {
   useCategoriesList,
   useCategoryCreate,
@@ -55,7 +55,7 @@ const CategoriesPage = () => {
         triggerText={CATEGORIES_DRAWER_TRIGGER_TEXT}
         title={CATEGORIES_DRAWER_TITLE}
         description={CATEGORIES_DRAWER_DESCRIPTION}
-        drawerContent={
+        content={
           <>
             <Input
               value={newCategoryTitle}

@@ -1,8 +1,8 @@
 import { instance } from "@/app/api/instance/instance.ts";
-import { TagType } from "@/app/types/tags.ts";
+import { TagType } from "@/app/types/tag.ts";
 
 export const getTagsList = async () => {
-  const { data } = await instance.get<TagType>(`tags`);
+  const { data } = await instance.get<TagType[]>(`tags`);
 
   return data;
 };

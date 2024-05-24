@@ -1,7 +1,7 @@
-export const TAGS_DRAWER_TRIGGER_TEXT = "Add user data";
-export const TAGS_DRAWER_TITLE = "Add user data";
+export const TAGS_DRAWER_TRIGGER_TEXT = "Add new tags";
+export const TAGS_DRAWER_TITLE = "Add new tags";
 export const TAGS_DRAWER_DESCRIPTION =
-  "Add details about your your to create your own posts";
+  "You can add up to 5 tags to help rest readers to understand posts purpose";
 
 export const TAGS_DRAWER_FIRST_PLACEHOLDER = "Tag #1";
 export const TAGS_DRAWER_SECOND_PLACEHOLDER = "Tag #2 (by wish)";

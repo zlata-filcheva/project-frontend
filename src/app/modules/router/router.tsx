@@ -4,6 +4,10 @@ import PageLayout from "../../components/PageLayout/PageLayout.tsx";
 import CategoriesPage from "../../pages/CategoriesPage/CategoriesPage.tsx";
 import ProfilePage from "@/app/pages/ProfilePage/ProfilePage.tsx";
 import TagsPage from "@/app/pages/TagsPage/TagsPage.tsx";
+import PostsPage from "@/app/pages/PostsPage/PostsPage.tsx";
+import NewPostPage from "@/app/pages/NewPostPage/NewPostPage.tsx";
+import EditPostPage from "@/app/pages/EditPostPage/EditPostPage.tsx";
+import PostPage from "@/app/pages/PostPage/PostPage.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -11,8 +15,9 @@ export const router = createBrowserRouter([
     path: PATH_NAMES.homePage,
     children: [
       {
-        //element: <PostsPage />,
-        //index: true,
+        path: PATH_NAMES.postsPage,
+        element: <PostsPage />,
+        index: true,
       },
       {
         path: PATH_NAMES.categoriesPage,
@@ -25,6 +30,18 @@ export const router = createBrowserRouter([
       {
         path: PATH_NAMES.profilePage,
         element: <ProfilePage />,
+      },
+      {
+        path: PATH_NAMES.newPostPage,
+        element: <NewPostPage />,
+      },
+      {
+        path: PATH_NAMES.editPostPage,
+        element: <EditPostPage />,
+      },
+      {
+        path: PATH_NAMES.postPage,
+        element: <PostPage />,
       },
     ],
   },

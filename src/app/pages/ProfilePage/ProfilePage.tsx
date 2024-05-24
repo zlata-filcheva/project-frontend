@@ -1,4 +1,4 @@
-import { usePageTitle } from "../../utils/usePageTitle/usePageTitle.ts";
+import { usePageTitle } from "../../utils/usePageTitle.ts";
 import { CirclePlus } from "lucide-react";
 import { useState } from "react";
 import { useUserData, useUserDataCreate } from "@/app/api/user/queryHooks.ts";
@@ -74,7 +74,7 @@ const ProfilePage = () => {
         triggerText={PROFILE_DRAWER_TRIGGER_TEXT}
         title={PROFILE_DRAWER_TITLE}
         description={PROFILE_DRAWER_DESCRIPTION}
-        drawerContent={
+        content={
           <>
             <Input
               value={name}
