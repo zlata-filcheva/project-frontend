@@ -1,13 +1,13 @@
 import {
-  Drawer as UiDrawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer.tsx";
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button.tsx";
 import { ReactElement } from "react";
 
@@ -16,41 +16,40 @@ const Drawer = ({
   triggerText,
   title,
   description,
-  drawerContent,
+  content,
   onSubmit,
 }: {
   triggerIcon: ReactElement;
   triggerText: string;
   title: string;
   description: string;
-  drawerContent: ReactElement;
+  content: ReactElement;
   onSubmit: () => void;
 }) => (
-  <UiDrawer>
-    <DrawerTrigger asChild>
+  <Sheet>
+    <SheetTrigger asChild>
       <Button variant="outline" className={"absolute bottom-5 right-5"}>
         {triggerIcon} {triggerText}
       </Button>
-    </DrawerTrigger>
+    </SheetTrigger>
 
-    <DrawerContent>
-      <div className="mx-auto w-full max-w-sm">
-        <DrawerHeader>
-          <DrawerTitle>{title}</DrawerTitle>
-          <DrawerDescription>{description}</DrawerDescription>
-        </DrawerHeader>
+    <SheetContent side={"right"}>
+      <SheetHeader>
+        <SheetTitle>{title}</SheetTitle>
+        <SheetDescription>{description}</SheetDescription>
+      </SheetHeader>
 
-        <div className="p-4 pb-0 grid space-y-2">{drawerContent}</div>
+      <div className="space-y-2 py-4">{content}</div>
 
-        <DrawerFooter>
-          <Button onClick={onSubmit}>Submit</Button>
-          <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </div>
-    </DrawerContent>
-  </UiDrawer>
+      <SheetFooter className={"grid grid-cols-2"}>
+        <SheetClose asChild>
+          <Button variant="outline">Cancel</Button>
+        </SheetClose>
+
+        <Button onClick={onSubmit}>Submit</Button>
+      </SheetFooter>
+    </SheetContent>
+  </Sheet>
 );
 
 export default Drawer;

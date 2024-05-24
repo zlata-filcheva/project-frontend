@@ -74,7 +74,7 @@ const ProfilePage = () => {
         triggerText={PROFILE_DRAWER_TRIGGER_TEXT}
         title={PROFILE_DRAWER_TITLE}
         description={PROFILE_DRAWER_DESCRIPTION}
-        drawerContent={
+        content={
           <>
             <Input
               value={name}

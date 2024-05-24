@@ -13,3 +13,20 @@ export type PostType = {
 export type PostCountType = {
   pagesTotal: number;
 };
+
+export type CreatePostProps = {
+  title: string;
+  content: string;
+  categoryId: number;
+  tagIds: number[];
+  userId: string;
+};
+
+export type EditPostProps = {
+  title: string;
+  content: string;
+  categoryId: number;
+  tagIds: number[];
+  id: number;
+  userId: string;
+};

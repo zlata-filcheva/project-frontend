@@ -1,5 +1,4 @@
 import Navbar from "../Navbar/Navbar.tsx";
-import { Outlet } from "react-router-dom";
 import PageTemplate from "../PageTemplate/PageTemplate.tsx";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -16,9 +15,7 @@ const PageLayout = () => {
         <Navbar />
       </header>
 
-      <PageTemplate>
-        <Outlet />
-      </PageTemplate>
+      <PageTemplate />
     </>
   );
 };

@@ -1,11 +1,28 @@
-import { useMutation, useQuery } from "react-query";
-import { createPost, getPostsCount, getPostsList } from "./api.ts";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
+  createPost,
+  deletePost,
+  getPost,
+  getPostsCount,
+  getPostsList,
+  updatePost,
+} from "./api.ts";
+import {
+  POST_QUERY_KEY,
   POSTS_COUNT_QUERY_KEY,
   POSTS_LIST_QUERY_KEY,
 } from "@/app/api/posts/queryKeys.ts";
 import { useState } from "react";
 import { POST_PAGE_ROW_COUNT } from "@/app/pages/PostsPage/constants.ts";
+import { CreatePostProps, EditPostProps } from "@/app/types/post.ts";
+
+export const usePost = (id: number) => {
+  const { data, isLoading } = useQuery([POST_QUERY_KEY], () => getPost(id), {
+    onSettled: () => {},
+  });
+
+  return { data, isLoading };
+};
 
 export const usePostsList = () => {
   const [page, setPage] = useState(1);
@@ -25,26 +42,53 @@ export const usePostsList = () => {
 
 export const usePostCreate = () => {
   const { mutate } = useMutation(
-    ({
-      data,
-    }: {
-      data: {
-        title: string;
-        content: string;
-        categoryId: number;
-        userId: string;
-        tagIds: number[];
-      };
-      onSettled: () => void;
-    }) => createPost(data),
+    ({ data }: { data: CreatePostProps; onSuccess: () => void }) =>
+      createPost(data),
     {
-      onSettled: async (_data, _error, { onSettled }) => {
-        onSettled();
+      onSuccess: async (_data, { onSuccess }) => {
+        onSuccess();
       },
     },
   );
 
   return { mutatePostCreate: mutate };
+};
+
+export const usePostUpdate = () => {
+  const { mutate } = useMutation(
+    ({ data }: { data: EditPostProps; onSuccess: () => void }) =>
+      updatePost(data),
+    {
+      onSuccess: async (_data, { onSuccess }) => {
+        onSuccess();
+      },
+    },
+  );
+
+  return { mutatePostUpdate: mutate };
+};
+
+export const usePostDelete = () => {
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation(
+    ({
+      data,
+    }: {
+      data: { id: number; userId: string };
+      onSuccess: () => void;
+    }) => deletePost(data),
+    {
+      onSuccess: async (_data, { onSuccess }) => {
+        await queryClient.invalidateQueries([POSTS_LIST_QUERY_KEY]);
+        await queryClient.invalidateQueries([POSTS_COUNT_QUERY_KEY]);
+
+        onSuccess();
+      },
+    },
+  );
+
+  return { mutatePostDelete: mutate };
 };
 
 export const usePostsCount = () => {

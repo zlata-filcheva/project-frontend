@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils.ts";
+import { Button } from "@/components/ui/button.tsx";
 import {
   Command,
   CommandEmpty,
@@ -12,15 +12,15 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
+} from "@/components/ui/command.tsx";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { NEW_POST_TAGS_COMBOBOX_TRIGGER_TEXT } from "@/app/pages/NewPostPage/constants.ts";
+} from "@/components/ui/popover.tsx";
+import { EDIT_POST_TAGS_COMBOBOX_TRIGGER_TEXT } from "@/app/components/PostForm/constants.ts";
 
-const NewPostTagsDataList = ({
+const PostTagsDataList = ({
   data,
   selectedList,
   onSelectedListChange,
@@ -33,7 +33,7 @@ const NewPostTagsDataList = ({
 
   const triggerText = (() => {
     if (!selectedList?.length) {
-      return NEW_POST_TAGS_COMBOBOX_TRIGGER_TEXT;
+      return EDIT_POST_TAGS_COMBOBOX_TRIGGER_TEXT;
     }
 
     const tagsText = selectedList.length > 1 ? "tags" : "tag";
@@ -87,4 +87,4 @@ const NewPostTagsDataList = ({
   );
 };
 
-export default NewPostTagsDataList;
+export default PostTagsDataList;

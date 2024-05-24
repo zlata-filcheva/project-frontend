@@ -1,5 +1,5 @@
 import { usePageTitle } from "../../utils/usePageTitle.ts";
-import PostCard from "@/app/pages/PostsPage/PostCard.tsx";
+import PostCard from "@/app/components/PostCard/PostCard.tsx";
 import { usePostsCount, usePostsList } from "@/app/api/posts/queryHooks.ts";
 import PostsPagePagination from "@/app/pages/PostsPage/PostsPagePagination.tsx";
 import PageItems from "@/app/pages/PostsPage/PageItems.tsx";
@@ -24,46 +24,48 @@ const PostsPage = () => {
     usePostsCount();
 
   if (isPostsListLoading || isPostsCountLoading) {
-    return;
-  }
-
-  if (!postsListData?.length || isEmpty(postsCountData)) {
     return null;
   }
 
   return (
     <>
-      {postsListData.map((post) => (
-        <div className={"mb-4"} key={post.id}>
-          <PostCard data={post} />
-        </div>
-      ))}
+      {!!postsListData?.length &&
+        postsListData.map((post) => (
+          <div className={"mb-4"} key={post.id}>
+            <PostCard data={post} />
+          </div>
+        ))}
 
-      <PostsPagePagination
-        pagesTotal={postsCountData.pagesTotal}
-        page={page}
-        onPageChange={setPage}
-      >
-        <PageItems
+      {!isEmpty(postsCountData) && (
+        <PostsPagePagination
           pagesTotal={postsCountData.pagesTotal}
           page={page}
           onPageChange={setPage}
-          renderPageLink={({
-            isActive,
-            onClick,
-            pageNumber,
-          }: RenderPageLinkType) => (
-            <PaginationItem onClick={onClick}>
-              <PaginationLink isActive={isActive}>{pageNumber}</PaginationLink>
-            </PaginationItem>
-          )}
-          renderPageEllipsis={
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-          }
-        />
-      </PostsPagePagination>
+        >
+          <PageItems
+            pagesTotal={postsCountData.pagesTotal}
+            page={page}
+            onPageChange={setPage}
+            renderPageLink={({
+              isActive,
+              onClick,
+              pageNumber,
+              key,
+            }: RenderPageLinkType) => (
+              <PaginationItem onClick={onClick} key={key}>
+                <PaginationLink isActive={isActive}>
+                  {pageNumber}
+                </PaginationLink>
+              </PaginationItem>
+            )}
+            renderPageEllipsis={(key) => (
+              <PaginationItem key={key}>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
+          />
+        </PostsPagePagination>
+      )}
     </>
   );
 };

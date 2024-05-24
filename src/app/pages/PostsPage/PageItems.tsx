@@ -18,8 +18,9 @@ const PageItems = ({
     isActive,
     onClick,
     pageNumber,
+    key,
   }: RenderPageLinkType) => ReactElement;
-  renderPageEllipsis: ReactElement;
+  renderPageEllipsis: (key: number) => ReactElement;
 }) => {
   const hasManyPages = pagesTotal > itemsBeforeEllipsis + 1;
 
@@ -46,11 +47,12 @@ const PageItems = ({
         onClick: handlePageChange,
         isActive: isCurrentPageSelected,
         pageNumber,
+        key: index,
       });
     }
 
     if (hasValueNearInterval) {
-      return renderPageEllipsis;
+      return renderPageEllipsis(index);
     }
 
     return null;

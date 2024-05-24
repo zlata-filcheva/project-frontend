@@ -5,10 +5,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select.tsx";
-import { NEW_POST_CATEGORY_SELECT_VALUE_PLACEHOLDER } from "@/app/pages/NewPostPage/constants.ts";
+import { EDIT_POST_CATEGORY_SELECT_VALUE_PLACEHOLDER } from "@/app/components/PostForm/constants.ts";
 import { capitalizeFirstLetter } from "@/app/utils/text.ts";
 
-const NewPostCategorySelect = ({
+const PostCategorySelect = ({
   data,
   value,
   onValueChange,
@@ -23,7 +23,9 @@ const NewPostCategorySelect = ({
       onValueChange={(newValue) => onValueChange(newValue)}
     >
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder={NEW_POST_CATEGORY_SELECT_VALUE_PLACEHOLDER} />
+        <SelectValue
+          placeholder={EDIT_POST_CATEGORY_SELECT_VALUE_PLACEHOLDER}
+        />
       </SelectTrigger>
 
       <SelectContent>
@@ -37,4 +39,4 @@ const NewPostCategorySelect = ({
   );
 };
 
-export default NewPostCategorySelect;
+export default PostCategorySelect;
