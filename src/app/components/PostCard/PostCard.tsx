@@ -28,7 +28,7 @@ const PostCard = ({ data }: { data: PostType }) => {
   const { mutatePostDelete } = usePostDelete();
 
   const isAuthor = data?.userId === user?.sub;
-  const isTitleHighlighted = PATH_NAMES.postsPage === pathname;
+  const isPostsPage = PATH_NAMES.postsPage === pathname;
 
   const handlePostEdit = () => {
     const newTagIds = data.tagList.map(({ id }) => id);
@@ -44,7 +44,13 @@ const PostCard = ({ data }: { data: PostType }) => {
 
     mutatePostDelete({
       data: { id: data.id, userId: user?.sub ?? "" },
-      onSuccess: () => {},
+      onSuccess: () => {
+        if (isPostsPage) {
+          return;
+        }
+
+        navigate(PATH_NAMES.postsPage, { replace: true });
+      },
     });
   };
 
@@ -64,7 +70,7 @@ const PostCard = ({ data }: { data: PostType }) => {
             </Avatar>
           </div>
 
-          {isTitleHighlighted ? (
+          {isPostsPage ? (
             <Link
               to={PATH_NAMES.postPage}
               state={{ id: data.id }}
