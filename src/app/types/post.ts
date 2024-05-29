@@ -10,7 +10,7 @@ export type PostType = {
   userId: string;
 };
 
-export type PostCountType = {
+export type PostsCountType = {
   pagesTotal: number;
 };
 

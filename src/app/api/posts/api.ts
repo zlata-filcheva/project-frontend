@@ -2,7 +2,7 @@ import { instance } from "@/app/api/instance/instance.ts";
 import {
   CreatePostProps,
   EditPostProps,
-  PostCountType,
+  PostsCountType,
   PostType,
 } from "@/app/types/post.ts";
 
@@ -66,7 +66,7 @@ export const deletePost = ({ id, userId }: { id: number; userId: string }) =>
   });
 
 export const getPostsCount = async (rowCount: string) => {
-  const { data } = await instance.get<PostCountType>(`posts/count`, {
+  const { data } = await instance.get<PostsCountType>(`posts/count`, {
     params: { rowCount },
   });
 

@@ -2,7 +2,7 @@ import { usePageTitle } from "../../utils/usePageTitle.ts";
 import PostCard from "@/app/components/PostCard/PostCard.tsx";
 import { usePostsCount, usePostsList } from "@/app/api/posts/queryHooks.ts";
 import PostsPagePagination from "@/app/pages/PostsPage/PostsPagePagination.tsx";
-import PageItems from "@/app/pages/PostsPage/PageItems.tsx";
+import PageItems from "@/app/components/PageItems/PageItems.tsx";
 import {
   PaginationEllipsis,
   PaginationItem,

@@ -24,6 +24,10 @@ const PageItems = ({
 }) => {
   const hasManyPages = pagesTotal > itemsBeforeEllipsis + 1;
 
+  if (pagesTotal < 2) {
+    return null;
+  }
+
   return [...Array(pagesTotal).keys()].map((_, index) => {
     const pageNumber = index + 1;
     const isCurrentPageSelected = page === pageNumber;
