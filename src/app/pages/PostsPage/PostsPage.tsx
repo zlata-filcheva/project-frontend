@@ -1,4 +1,4 @@
-import { usePageTitle } from "../../utils/usePageTitle.ts";
+import { useDocumentTitle } from "../../utils/useDocumentTitle.ts";
 import PostCard from "@/app/components/PostCard/PostCard.tsx";
 import { usePostsCount, usePostsList } from "@/app/api/posts/queryHooks.ts";
 import PostsPagePagination from "@/app/pages/PostsPage/PostsPagePagination.tsx";
@@ -12,7 +12,7 @@ import { isEmpty } from "lodash";
 import type { RenderPageLinkType } from "@/app/types/page.ts";
 
 const PostsPage = () => {
-  usePageTitle("Posts page");
+  useDocumentTitle("Posts page");
 
   const {
     data: postsListData,

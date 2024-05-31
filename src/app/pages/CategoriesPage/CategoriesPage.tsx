@@ -1,4 +1,4 @@
-import { usePageTitle } from "../../utils/usePageTitle.ts";
+import { useDocumentTitle } from "../../utils/useDocumentTitle.ts";
 import {
   useCategoriesList,
   useCategoryCreate,
@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
 
 const CategoriesPage = () => {
-  usePageTitle("Categories page");
+  useDocumentTitle("Categories page");
 
   const { data, isLoading } = useCategoriesList();
   const { mutateCategoryCreate } = useCategoryCreate();

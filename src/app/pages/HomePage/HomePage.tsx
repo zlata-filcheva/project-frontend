@@ -1,9 +1,9 @@
-import { usePageTitle } from "../../utils/usePageTitle.ts";
+import { useDocumentTitle } from "../../utils/useDocumentTitle.ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "../../components/Navbar/LogoutButton.tsx";
 
 const HomePage = () => {
-  usePageTitle("Home page");
+  useDocumentTitle("Home page");
 
   const { isAuthenticated, isLoading, loginWithRedirect, user } = useAuth0();
 

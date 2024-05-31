@@ -1,8 +1,11 @@
 import { useCommentsCount } from "@/app/api/comments/queryHooks.ts";
 import { MessageSquareText } from "lucide-react";
+import PostPageLink from "@/app/components/PostCard/PostPageLink.tsx";
 
 const CommentsTotal = ({ postId }: { postId: number }) => {
   const { data, isLoading } = useCommentsCount(postId);
+
+  const commentsText = `${data?.commentsTotal} ${data?.commentsTotal !== 1 ? "comments" : "comment"}`;
 
   if (isLoading) {
     return null;
@@ -14,9 +17,7 @@ const CommentsTotal = ({ postId }: { postId: number }) => {
         <MessageSquareText />
       </div>
       <div>
-        {" "}
-        {data?.commentsTotal}{" "}
-        {data?.commentsTotal !== 0 ? "comments" : "comment"}
+        <PostPageLink text={commentsText} postId={postId} />
       </div>
     </div>
   );

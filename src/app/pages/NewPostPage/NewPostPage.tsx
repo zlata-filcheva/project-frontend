@@ -1,8 +1,8 @@
-import { usePageTitle } from "@/app/utils/usePageTitle.ts";
+import { useDocumentTitle } from "@/app/utils/useDocumentTitle.ts";
 import PostForm from "@/app/components/PostForm/PostForm.tsx";
 
 const NewPostPage = () => {
-  usePageTitle("New post page");
+  useDocumentTitle("New post page");
 
   return <PostForm />;
 };

@@ -1,4 +1,4 @@
-import { usePageTitle } from "../../utils/usePageTitle.ts";
+import { useDocumentTitle } from "../../utils/useDocumentTitle.ts";
 import { CirclePlus } from "lucide-react";
 import { useState } from "react";
 import { useUserData, useUserDataCreate } from "@/app/api/user/queryHooks.ts";
@@ -15,7 +15,7 @@ import {
 } from "@/app/pages/ProfilePage/constants.ts";
 
 const ProfilePage = () => {
-  usePageTitle("Profile page");
+  useDocumentTitle("Profile page");
 
   const { user } = useAuth0();
 

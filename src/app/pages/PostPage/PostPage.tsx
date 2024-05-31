@@ -1,4 +1,4 @@
-import { usePageTitle } from "@/app/utils/usePageTitle.ts";
+import { useDocumentTitle } from "@/app/utils/useDocumentTitle.ts";
 import { useLocation } from "react-router-dom";
 import PostCard from "@/app/components/PostCard/PostCard.tsx";
 import { usePost } from "@/app/api/posts/queryHooks.ts";
@@ -8,7 +8,7 @@ import { useState } from "react";
 import { POST_PAGE_COMMENT_PLACEHOLDER } from "@/app/pages/PostPage/constants.ts";
 
 const PostPage = () => {
-  usePageTitle("Post page");
+  useDocumentTitle("Post page");
 
   const {
     state: { id },
@@ -30,6 +30,7 @@ const PostPage = () => {
       <PostCard data={data} />
 
       <Input
+        className={"my-2"}
         value={comment}
         onChange={(e) => setComment(e.target.value)}
         placeholder={POST_PAGE_COMMENT_PLACEHOLDER}
