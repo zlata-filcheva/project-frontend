@@ -11,10 +11,10 @@ import {
   COMMENTS_LIST_QUERY_KEY,
 } from "@/app/api/comments/queryKeys.ts";
 
-export const useCommentsCount = () => {
+export const useCommentsCount = (postId: number) => {
   const { data, isLoading } = useQuery(
     [COMMENTS_COUNT_QUERY_KEY],
-    () => getCommentsCount(),
+    () => getCommentsCount(postId),
     {
       onSettled: () => {},
     },

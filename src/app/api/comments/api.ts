@@ -1,8 +1,14 @@
 import { instance } from "@/app/api/instance/instance.ts";
 import { CommentsCountType, CommentType } from "@/app/types/comments.ts";
 
-export const getCommentsCount = async () => {
-  const { data } = await instance.get<CommentsCountType>(`comments/count`);
+export const getCommentsCount = async (postId: number) => {
+  const params = new URLSearchParams();
+
+  params.append("postId", postId.toString());
+
+  const { data } = await instance.get<CommentsCountType>(`comments/count`, {
+    params,
+  });
 
   return data;
 };

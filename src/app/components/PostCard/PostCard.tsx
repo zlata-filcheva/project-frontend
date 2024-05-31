@@ -20,6 +20,7 @@ import { PostType } from "@/app/types/post.ts";
 import { usePostDelete } from "@/app/api/posts/queryHooks.ts";
 import { POST_CARD_DELETE_CONFIRM_TEXT } from "@/app/components/PostCard/constants.ts";
 import { POST_CARD_STYLES } from "@/app/components/PostCard/styles.ts";
+import CommentsTotal from "@/app/components/PostCard/CommentsTotal.tsx";
 
 const PostCard = ({ data }: { data: PostType }) => {
   const navigate = useNavigate();
@@ -110,7 +111,7 @@ const PostCard = ({ data }: { data: PostType }) => {
           ))}
         </div>
 
-        <div>Comments data</div>
+        <CommentsTotal postId={data.id} />
       </CardFooter>
     </Card>
   );
