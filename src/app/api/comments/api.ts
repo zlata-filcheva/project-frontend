@@ -13,12 +13,12 @@ export const getCommentsCount = async (postId: number) => {
   return data;
 };
 
-export const getCommentsList = async (postId: number) => {
+export const getCommentsList = async (postId: string) => {
   const params = new URLSearchParams();
 
-  params.append("postId", postId.toString());
+  params.append("postId", postId);
 
-  const { data } = await instance.get<CommentsCountType>(`comments`, {
+  const { data } = await instance.get<CommentType[]>(`comments`, {
     params,
   });
 
@@ -26,7 +26,7 @@ export const getCommentsList = async (postId: number) => {
 };
 
 export const createComment = (postId: number) =>
-  instance.post<CommentType[]>(`comments`, {
+  instance.post<CommentType>(`comments`, {
     postId,
   });
 

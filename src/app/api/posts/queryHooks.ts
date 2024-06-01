@@ -15,11 +15,20 @@ import {
 import { useState } from "react";
 import { POST_PAGE_ROW_COUNT } from "@/app/pages/PostsPage/constants.ts";
 import { CreatePostProps, EditPostProps } from "@/app/types/post.ts";
+import { useLocation } from "react-router-dom";
 
-export const usePost = (id: number) => {
-  const { data, isLoading } = useQuery([POST_QUERY_KEY], () => getPost(id), {
-    onSettled: () => {},
-  });
+export const usePost = () => {
+  const {
+    state: { postId },
+  } = useLocation();
+
+  const { data, isLoading } = useQuery(
+    [POST_QUERY_KEY],
+    () => getPost(postId),
+    {
+      onSettled: () => {},
+    },
+  );
 
   return { data, isLoading };
 };

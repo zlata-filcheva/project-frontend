@@ -14,7 +14,7 @@ const PostPageLink = ({ text, postId }: { text: string; postId: number }) => {
   return (
     <Link
       to={PATH_NAMES.postPage}
-      state={{ id: postId }}
+      state={{ postId: postId }}
       className={POST_CARD_STYLES.link.highlighted}
     >
       {text}

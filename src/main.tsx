@@ -12,7 +12,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       domain="dev-w6rj2fk5hpkln802.eu.auth0.com"
       clientId="72ITWEhJ7FyOHoOJJwOyeqm6nJ305k7G"
       authorizationParams={{
-        redirect_uri: window.location.origin,
+        redirect_uri: "https://127.0.0.1:5173/callback",
         audience: "https://dev-w6rj2fk5hpkln802.eu.auth0.com/api/v2/",
         scope: "read:current_user profile",
       }}

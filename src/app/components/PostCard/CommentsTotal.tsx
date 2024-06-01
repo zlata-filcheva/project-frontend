@@ -12,7 +12,7 @@ const CommentsTotal = ({ postId }: { postId: number }) => {
   }
 
   return (
-    <div className={"grid grid-flow-col auto-cols-max align-middle mt-2"}>
+    <div className={"grid grid-flow-col auto-cols-max mt-2"}>
       <div className={"pr-2"}>
         <MessageSquareText />
       </div>

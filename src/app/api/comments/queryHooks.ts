@@ -10,6 +10,7 @@ import {
   COMMENTS_COUNT_QUERY_KEY,
   COMMENTS_LIST_QUERY_KEY,
 } from "@/app/api/comments/queryKeys.ts";
+import { useLocation } from "react-router-dom";
 
 export const useCommentsCount = (postId: number) => {
   const { data, isLoading } = useQuery(
@@ -23,7 +24,11 @@ export const useCommentsCount = (postId: number) => {
   return { data, isLoading };
 };
 
-export const useCommentsList = (postId: number) => {
+export const useCommentsList = () => {
+  const {
+    state: { postId },
+  } = useLocation();
+
   const { data, isLoading } = useQuery(
     [COMMENTS_LIST_QUERY_KEY],
     () => getCommentsList(postId),

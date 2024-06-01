@@ -1,4 +1,4 @@
-import { usePageTitle } from "@/app/utils/usePageTitle.tsx";
+import { usePageTitle } from "@/app/utils/usePageTitle.ts";
 
 const PageTitle = () => {
   const { title } = usePageTitle();

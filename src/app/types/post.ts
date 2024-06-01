@@ -1,13 +1,15 @@
+import { UserType } from "@/app/types/user.ts";
+import { TagType } from "@/app/types/tag.ts";
+
 export type PostType = {
   id: number;
   title: string;
   content: string;
-  surname: string;
-  creatingDate: string;
+  creationDate: string;
   updateDate: string;
   categoryId: number;
-  tagList: { id: number; name: string }[];
-  userId: string;
+  tagList: TagType[];
+  user: UserType;
 };
 
 export type PostsCountType = {

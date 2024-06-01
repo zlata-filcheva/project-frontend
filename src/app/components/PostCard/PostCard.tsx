@@ -27,7 +27,11 @@ const PostCard = ({ data }: { data: PostType }) => {
   const { user } = useAuth0();
   const { mutatePostDelete } = usePostDelete();
 
-  const isAuthor = data?.userId === user?.sub;
+  const isAuthor = data.user.id === user?.sub;
+  const userNickname = data.user.name
+    .split(" ")
+    .map((value) => value[0])
+    .join("");
 
   const handlePostEdit = () => {
     const newTagIds = data.tagList.map(({ id }) => id);
@@ -60,8 +64,8 @@ const PostCard = ({ data }: { data: PostType }) => {
         >
           <div className={"p-1"}>
             <Avatar>
-              <AvatarImage src={"https://github.com/shadcnfff.png"} />
-              <AvatarFallback>U</AvatarFallback>
+              <AvatarImage src={data.user.picture} />
+              <AvatarFallback>{userNickname}</AvatarFallback>
             </Avatar>
           </div>
 

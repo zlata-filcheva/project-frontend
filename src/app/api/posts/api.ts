@@ -6,7 +6,7 @@ import {
   PostType,
 } from "@/app/types/post.ts";
 
-export const getPost = async (id: number) => {
+export const getPost = async (id: string) => {
   const { data } = await instance.get<PostType>(`posts/${id}`);
 
   return data;
