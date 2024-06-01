@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import { PATH_NAMES } from "./routes.ts";
 import PageLayout from "../../components/PageLayout/PageLayout.tsx";
 import CategoriesPage from "../../pages/CategoriesPage/CategoriesPage.tsx";
@@ -7,11 +7,12 @@ import PostsPage from "@/app/pages/PostsPage/PostsPage.tsx";
 import NewPostPage from "@/app/pages/NewPostPage/NewPostPage.tsx";
 import EditPostPage from "@/app/pages/EditPostPage/EditPostPage.tsx";
 import PostPage from "@/app/pages/PostPage/PostPage.tsx";
+import AuthenticationRouter from "@/app/modules/authentication/AuthenticationRouter.tsx";
 
 export const router = createBrowserRouter([
   {
     path: PATH_NAMES.callback,
-    element: <Navigate to={PATH_NAMES.postsPage} />,
+    element: <AuthenticationRouter />,
   },
   {
     element: <PageLayout />,
