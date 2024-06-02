@@ -16,6 +16,7 @@ import { useState } from "react";
 import { POST_PAGE_ROW_COUNT } from "@/app/pages/PostsPage/constants.ts";
 import { CreatePostProps, EditPostProps } from "@/app/types/post.ts";
 import { useLocation } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const usePost = () => {
   const {
@@ -79,14 +80,11 @@ export const usePostUpdate = () => {
 
 export const usePostDelete = () => {
   const queryClient = useQueryClient();
+  const { user } = useAuth0();
 
   const { mutate } = useMutation(
-    ({
-      data,
-    }: {
-      data: { id: number; userId: string };
-      onSuccess: () => void;
-    }) => deletePost(data),
+    ({ id }: { id: number; onSuccess: () => void }) =>
+      deletePost(id, user?.sub ?? ""),
     {
       onSuccess: async (_data, { onSuccess }) => {
         await queryClient.invalidateQueries([POSTS_LIST_QUERY_KEY]);

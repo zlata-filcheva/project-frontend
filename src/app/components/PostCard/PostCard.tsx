@@ -46,7 +46,7 @@ const PostCard = ({ data }: { data: PostType }) => {
     }
 
     mutatePostDelete({
-      data: { id: data.id, userId: user?.sub ?? "" },
+      id: data.id,
       onSuccess: () => {
         navigate(PATH_NAMES.postsPage, { replace: true });
       },

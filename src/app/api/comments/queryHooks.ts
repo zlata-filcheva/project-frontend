@@ -101,10 +101,11 @@ export const useCommentUpdate = () => {
 
 export const useCommentDelete = () => {
   const queryClient = useQueryClient();
+  const { user } = useAuth0();
 
   const { mutate } = useMutation(
-    ({ id, userId }: { id: number; userId: string; onSuccess: () => void }) =>
-      deleteComment(id, userId),
+    ({ id }: { id: number; onSuccess: () => void }) =>
+      deleteComment(id, user?.sub ?? ""),
     {
       onSuccess: async (_data, { onSuccess }) => {
         await queryClient.invalidateQueries([COMMENTS_COUNT_QUERY_KEY]);

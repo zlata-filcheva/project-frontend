@@ -136,7 +136,6 @@ const CommentItem = ({ data }: { data: CommentType }) => {
 
     mutateCommentDelete({
       id: data.id,
-      userId: user?.sub ?? "",
       onSuccess: () => {},
     });
   };

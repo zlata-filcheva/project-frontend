@@ -60,7 +60,7 @@ export const updatePost = ({
     userId,
   });
 
-export const deletePost = ({ id, userId }: { id: number; userId: string }) =>
+export const deletePost = (id: number, userId: string) =>
   instance.delete<"Post has been deleted">(`posts/${id}`, {
     data: { userId },
   });

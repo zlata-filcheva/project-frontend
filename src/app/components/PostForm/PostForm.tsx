@@ -102,14 +102,8 @@ const PostForm = ({ editPostData }: { editPostData?: EditPostProps }) => {
       tagIds,
       userId: user?.sub ?? "",
     };
-    const userData = {
-      id: user?.sub ?? "",
-      name: user?.name ?? "",
-      picture: user?.picture ?? "",
-    };
 
     mutateUserDataUpdate({
-      data: userData,
       onSettled: () => {},
     });
 
