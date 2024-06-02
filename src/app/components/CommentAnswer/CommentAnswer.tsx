@@ -13,9 +13,8 @@ const CommentAnswer = ({
   onSubmit: () => void;
   buttonText: string;
 }) => (
-  <div className="flex w-full items-center space-x-2 my-2">
+  <div className="flex w-full items-center space-x-2 mt-2">
     <Input
-      className={"mt-2"}
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={COMMENT_ANSWER_PLACEHOLDER}
