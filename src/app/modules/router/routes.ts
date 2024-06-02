@@ -1,4 +1,5 @@
 export const PATH_NAMES = {
+  callback: "/callback",
   homePage: "/",
   postsPage: "/posts",
   postPage: "/post",
@@ -6,5 +7,4 @@ export const PATH_NAMES = {
   editPostPage: "/edit-post",
   tagsPage: "/tags",
   categoriesPage: "/categories",
-  profilePage: "/profile",
 };

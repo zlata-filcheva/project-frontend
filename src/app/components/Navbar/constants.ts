@@ -21,9 +21,4 @@ export const NAVBAR_PAGES = [
     name: "Tags",
     to: PATH_NAMES.tagsPage,
   },
-  {
-    hasAuthentication: true,
-    name: "Profile",
-    to: PATH_NAMES.profilePage,
-  },
 ];

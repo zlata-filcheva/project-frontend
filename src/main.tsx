@@ -9,12 +9,12 @@ import { Auth0Provider } from "@auth0/auth0-react";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Auth0Provider
-      domain="dev-w6rj2fk5hpkln802.eu.auth0.com"
-      clientId="72ITWEhJ7FyOHoOJJwOyeqm6nJ305k7G"
+      domain={import.meta.env.VITE_AUTH0_DOMAIN}
+      clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
       authorizationParams={{
-        redirect_uri: window.location.origin,
-        audience: "https://dev-w6rj2fk5hpkln802.eu.auth0.com/api/v2/",
-        scope: "read:current_user update:current_user_metadata",
+        redirect_uri: import.meta.env.VITE_AUTH0_REDIRECT_URI,
+        audience: import.meta.env.VITE_AUTH0_AUDIENCE,
+        scope: import.meta.env.VITE_AUTH0_SCOPE,
       }}
     >
       <QueryClientProvider client={new QueryClient()}>

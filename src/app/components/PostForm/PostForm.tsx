@@ -19,6 +19,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { PATH_NAMES } from "@/app/modules/router/routes.ts";
 import { useNavigate } from "react-router-dom";
 import { EditPostProps } from "@/app/types/post.ts";
+import { useUserDataUpdate } from "@/app/api/user/queryHooks.ts";
 
 const PostForm = ({ editPostData }: { editPostData?: EditPostProps }) => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const PostForm = ({ editPostData }: { editPostData?: EditPostProps }) => {
   const { data: tagsListData, isLoading: isTagsListLoading } = useTagsList();
   const { mutatePostCreate } = usePostCreate();
   const { mutatePostUpdate } = usePostUpdate();
+  const { mutateUserDataUpdate } = useUserDataUpdate();
 
   const [title, setTitle] = useState<string>(editPostData?.title ?? "");
   const [content, setContent] = useState<string>(editPostData?.content ?? "");
@@ -38,9 +40,13 @@ const PostForm = ({ editPostData }: { editPostData?: EditPostProps }) => {
   const [tagIds, setTagIds] = useState<number[]>(editPostData?.tagIds ?? []);
 
   const isSubmitButtonActive = (() => {
+    if (!tagsListData?.length || !categoriesListData?.length) {
+      return false;
+    }
+
     if (!editPostData?.id) {
       return (
-        !!title.length || !!content.length || !!categoryId || !!tagIds.length
+        !!title.length && !!content.length && !!categoryId && !!tagIds.length
       );
     }
 
@@ -89,7 +95,7 @@ const PostForm = ({ editPostData }: { editPostData?: EditPostProps }) => {
       return;
     }
 
-    const data = {
+    const postData = {
       title,
       content,
       categoryId,
@@ -97,9 +103,13 @@ const PostForm = ({ editPostData }: { editPostData?: EditPostProps }) => {
       userId: user?.sub ?? "",
     };
 
+    mutateUserDataUpdate({
+      onSettled: () => {},
+    });
+
     if (!editPostData?.id) {
       mutatePostCreate({
-        data,
+        data: postData,
         onSuccess: () => {
           navigate(PATH_NAMES.postsPage);
         },
@@ -109,7 +119,7 @@ const PostForm = ({ editPostData }: { editPostData?: EditPostProps }) => {
     }
 
     mutatePostUpdate({
-      data: { ...data, id: Number(editPostData?.id) },
+      data: { ...postData, id: Number(editPostData?.id) },
       onSuccess: () => {
         navigate(PATH_NAMES.postsPage);
       },
@@ -130,7 +140,7 @@ const PostForm = ({ editPostData }: { editPostData?: EditPostProps }) => {
         />
       </div>
 
-      {categoriesListData?.length && (
+      {!!categoriesListData?.length && (
         <div>
           <PostCategorySelect
             data={categoriesListData}
@@ -140,7 +150,7 @@ const PostForm = ({ editPostData }: { editPostData?: EditPostProps }) => {
         </div>
       )}
 
-      {tagsListData?.length && (
+      {!!tagsListData?.length && (
         <div className={"text-right"}>
           <PostTagsDataList
             data={tagsListData}

@@ -1,4 +1,4 @@
-import { usePageTitle } from "../../utils/usePageTitle.ts";
+import { useDocumentTitle } from "../../utils/useDocumentTitle.ts";
 import { CirclePlus } from "lucide-react";
 import { useState } from "react";
 import { Input } from "@/components/ui/input.tsx";
@@ -18,7 +18,7 @@ import {
 import { useTagsCreate, useTagsList } from "@/app/api/tags/queryHooks.ts";
 
 const TagsPage = () => {
-  usePageTitle("Tags page");
+  useDocumentTitle("Tags page");
 
   const { data, isLoading } = useTagsList();
   const { mutateTagsCreate } = useTagsCreate();

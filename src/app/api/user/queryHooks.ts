@@ -1,42 +1,25 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { createUserData, getUserData } from "./api.ts";
-import { USER_DATA_QUERY_KEY } from "@/app/api/user/queryKeys.ts";
+import { useMutation } from "react-query";
+import { updateUserData } from "./api.ts";
+import { useAuth0 } from "@auth0/auth0-react";
 
-export const useUserData = (id: string) => {
-  const { data, isLoading } = useQuery(
-    [USER_DATA_QUERY_KEY],
-    () => getUserData(id),
-    {
-      onSettled: () => {},
-    },
-  );
+export const useUserDataUpdate = () => {
+  const { user } = useAuth0();
 
-  return { data, isLoading };
-};
-
-export const useUserDataCreate = () => {
-  const queryClient = useQueryClient();
+  const userData = {
+    id: user?.sub ?? "",
+    name: user?.name ?? "",
+    picture: user?.picture ?? "",
+  };
 
   const { mutate } = useMutation(
-    ({
-      data,
-    }: {
-      data: {
-        id: string;
-        nickname: string;
-        name: string;
-        surname: string;
-      };
-      onSettled: () => void;
-    }) => createUserData(data),
+    // eslint-disable-next-line no-empty-pattern
+    ({}: { onSettled: () => void }) => updateUserData(userData),
     {
       onSettled: async (_data, _error, { onSettled }) => {
-        await queryClient.invalidateQueries([USER_DATA_QUERY_KEY]);
-
         onSettled();
       },
     },
   );
 
-  return { mutateUserDataCreate: mutate };
+  return { mutateUserDataUpdate: mutate };
 };
