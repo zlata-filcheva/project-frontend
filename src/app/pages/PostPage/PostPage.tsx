@@ -2,45 +2,64 @@ import { useDocumentTitle } from "@/app/utils/useDocumentTitle.ts";
 import PostCard from "@/app/components/PostCard/PostCard.tsx";
 import { usePost } from "@/app/api/posts/queryHooks.ts";
 import { isEmpty } from "lodash";
-import { Input } from "@/components/ui/input.tsx";
 import { useState } from "react";
 import {
-  POST_PAGE_COMMENT_PLACEHOLDER,
-  POST_PAGE_COMMENT_SUBMIT_BUTTON_TEXT,
-} from "@/app/pages/PostPage/constants.ts";
-import { Button } from "@/components/ui/button.tsx";
-import CommentsList from "@/app/pages/PostPage/CommentsList.tsx";
+  useCommentCreate,
+  useCommentsList,
+} from "@/app/api/comments/queryHooks.ts";
+import CommentAnswer from "@/app/components/CommentAnswer/CommentAnswer.tsx";
+import { POST_PAGE_COMMENT_CREATE_BUTTON_TEXT } from "@/app/pages/PostPage/constants.ts";
+import { useAuth0 } from "@auth0/auth0-react";
+import CommentItem from "@/app/pages/PostPage/CommentItem.tsx";
 
 const PostPage = () => {
   useDocumentTitle("Post page");
 
-  const { data, isLoading } = usePost();
+  const { isAuthenticated } = useAuth0();
+
+  const { postData, isPostDataLoading } = usePost();
+  const { commentsListData } = useCommentsList();
+  const { mutateCommentCreate } = useCommentCreate();
 
   const [comment, setComment] = useState("");
 
-  if (isLoading) {
-    return null;
-  }
+  const handleCommentPublish = () => {
+    if (!comment.length) {
+      return;
+    }
 
-  if (isEmpty(data)) {
+    mutateCommentCreate({
+      data: { content: comment, postId: postData?.id ?? 0, parentId: 0 },
+      onSuccess: () => {
+        setComment("");
+      },
+    });
+  };
+
+  if (isPostDataLoading || isEmpty(postData)) {
     return null;
   }
 
   return (
     <>
-      <PostCard data={data} />
+      <PostCard data={postData} />
 
-      <div className="flex w-full items-center space-x-2 my-2">
-        <Input
-          className={"my-2"}
+      {isAuthenticated && (
+        <CommentAnswer
           value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          placeholder={POST_PAGE_COMMENT_PLACEHOLDER}
+          onChange={setComment}
+          onSubmit={handleCommentPublish}
+          buttonText={POST_PAGE_COMMENT_CREATE_BUTTON_TEXT}
         />
-        <Button>{POST_PAGE_COMMENT_SUBMIT_BUTTON_TEXT}</Button>
-      </div>
+      )}
 
-      <CommentsList />
+      {!!commentsListData?.length && (
+        <div className={"mt-2"}>
+          {commentsListData.map((comment) => (
+            <CommentItem key={comment.id} data={comment} />
+          ))}
+        </div>
+      )}
     </>
   );
 };

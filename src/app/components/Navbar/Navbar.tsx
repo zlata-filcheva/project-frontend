@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import AuthButton from "@/app/components/Navbar/AuthButton.tsx";
 import { NAVBAR_PAGES } from "@/app/components/Navbar/constants.ts";
 import { NAVBAR_STYLES } from "@/app/components/Navbar/styles.ts";
+import LogoSvg from "../../../../public/logo-no-background.svg";
 
 const Navbar = () => {
   const { isAuthenticated } = useAuth0();
@@ -11,19 +12,12 @@ const Navbar = () => {
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a
-          href="https://flowbite.com/"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
-        >
-          <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            className="h-8"
-            alt="Flowbite Logo"
-          />
+        <div className={"flex gap-2"}>
+          <img src={LogoSvg} className="h-16" alt="New Reddit" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            Flowbite
+            New Reddit
           </span>
-        </a>
+        </div>
 
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <AuthButton />

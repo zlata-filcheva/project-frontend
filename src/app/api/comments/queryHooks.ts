@@ -11,6 +11,7 @@ import {
   COMMENTS_LIST_QUERY_KEY,
 } from "@/app/api/comments/queryKeys.ts";
 import { useLocation } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const useCommentsCount = (postId: number) => {
   const { data, isLoading } = useQuery(
@@ -38,15 +39,24 @@ export const useCommentsList = () => {
     },
   );
 
-  return { data, isLoading };
+  return { commentsListData: data, isCommentsData: isLoading };
 };
 
 export const useCommentCreate = () => {
   const queryClient = useQueryClient();
+  const { user } = useAuth0();
 
   const { mutate } = useMutation(
-    ({ postId }: { postId: number; onSuccess: () => void }) =>
-      createComment(postId),
+    ({
+      data,
+    }: {
+      data: {
+        content: string;
+        postId: number;
+        parentId: number;
+      };
+      onSuccess: () => void;
+    }) => createComment({ ...data, userId: user?.sub ?? "" }),
     {
       onSuccess: async (_data, { onSuccess }) => {
         await queryClient.invalidateQueries([COMMENTS_COUNT_QUERY_KEY]);
@@ -93,7 +103,8 @@ export const useCommentDelete = () => {
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation(
-    ({ id }: { id: number; onSuccess: () => void }) => deleteComment(id),
+    ({ id, userId }: { id: number; userId: string; onSuccess: () => void }) =>
+      deleteComment(id, userId),
     {
       onSuccess: async (_data, { onSuccess }) => {
         await queryClient.invalidateQueries([COMMENTS_COUNT_QUERY_KEY]);

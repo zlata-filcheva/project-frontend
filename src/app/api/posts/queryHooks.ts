@@ -30,7 +30,7 @@ export const usePost = () => {
     },
   );
 
-  return { data, isLoading };
+  return { postData: data, isPostDataLoading: isLoading };
 };
 
 export const usePostsList = () => {

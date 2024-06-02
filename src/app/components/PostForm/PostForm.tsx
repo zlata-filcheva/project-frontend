@@ -40,9 +40,13 @@ const PostForm = ({ editPostData }: { editPostData?: EditPostProps }) => {
   const [tagIds, setTagIds] = useState<number[]>(editPostData?.tagIds ?? []);
 
   const isSubmitButtonActive = (() => {
+    if (!tagsListData?.length || !categoriesListData?.length) {
+      return false;
+    }
+
     if (!editPostData?.id) {
       return (
-        !!title.length || !!content.length || !!categoryId || !!tagIds.length
+        !!title.length && !!content.length && !!categoryId && !!tagIds.length
       );
     }
 
@@ -142,7 +146,7 @@ const PostForm = ({ editPostData }: { editPostData?: EditPostProps }) => {
         />
       </div>
 
-      {categoriesListData?.length && (
+      {!!categoriesListData?.length && (
         <div>
           <PostCategorySelect
             data={categoriesListData}
@@ -152,7 +156,7 @@ const PostForm = ({ editPostData }: { editPostData?: EditPostProps }) => {
         </div>
       )}
 
-      {tagsListData?.length && (
+      {!!tagsListData?.length && (
         <div className={"text-right"}>
           <PostTagsDataList
             data={tagsListData}

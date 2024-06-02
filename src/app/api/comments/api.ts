@@ -25,9 +25,22 @@ export const getCommentsList = async (postId: string) => {
   return data;
 };
 
-export const createComment = (postId: number) =>
+export const createComment = ({
+  content,
+  postId,
+  userId,
+  parentId,
+}: {
+  content: string;
+  postId: number;
+  userId: string;
+  parentId: number;
+}) =>
   instance.post<CommentType>(`comments`, {
+    content,
     postId,
+    userId,
+    parentId,
   });
 
 export const updateComment = ({
@@ -43,11 +56,7 @@ export const updateComment = ({
   likedByUserId?: string;
   dislikedByUserId?: string;
 }) => {
-  const url = new URL("comments");
-
-  url.searchParams.append("id", id.toString());
-
-  return instance.patch<CommentType>(url.toString(), {
+  return instance.patch<CommentType>(`comments/${id}`, {
     ...(!!content?.length && { content }),
     ...(!!userId?.length && { userId }),
     ...(!!likedByUserId?.length && { likedByUserId }),
@@ -55,12 +64,7 @@ export const updateComment = ({
   });
 };
 
-export const deleteComment = (id: number) => {
-  const params = new URLSearchParams();
-
-  params.append("id", id.toString());
-
-  return instance.delete<"Comment has been deleted">(`comments`, {
-    params,
+export const deleteComment = (id: number, userId: string) =>
+  instance.delete<"Comment has been deleted">(`comments/${id}`, {
+    data: { userId },
   });
-};
